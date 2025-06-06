@@ -1,0 +1,106 @@
+### Health Check
+GET http://localhost:5000/health
+
+### IMPORTANT: Before running these requests, make sure to set up your .env file with JWT secrets
+# Create a .env file in the backend directory with the following variables:
+# ACCESS_TOKEN_SECRET=your_access_token_secret_here
+# REFRESH_TOKEN_SECRET=your_refresh_token_secret_here
+# 
+# You can generate secure random strings for these secrets using Node.js:
+# node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+
+### ==================== AUTH ROUTES ====================
+
+### Register User
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "gustan@gmail.com",
+    "username": "foodlover123",
+    "password": "123123"
+}
+
+### Login
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "gustan@gmail.com",
+    "password": "123123"
+}
+
+### Get User Profile
+GET http://localhost:5000/api/auth/profile
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Update User Profile with Profile Picture
+PUT http://localhost:5000/api/auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJmb29kbG92ZXIxMjMiLCJlbWFpbCI6Imd1c3RhbkBnbWFpbC5jb20iLCJwcm9maWxlUGljdHVyZSI6bnVsbCwic3RlYW1JZCI6bnVsbCwic3RyZWV0IjpudWxsLCJjaXR5IjpudWxsLCJ6aXBDb2RlIjpudWxsLCJjb3VudHJ5IjoiSW5kb25lc2lhIiwicm9sZSI6ImN1c3RvbWVyIiwiY3JlYXRlZEF0IjoiMjAyNS0wNi0wNlQxNjo1NDo1MC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyNS0wNi0wNlQxNjo1NDo1MC4wMDBaIiwiaWF0IjoxNzQ5MjI4OTAxLCJleHAiOjE3NDkyMzA3MDF9.cNduDOSOgRICHkV4gFh4bBiE5YZ9aGnyVV7zdBO1u3U
+Content-Type: application/json
+
+{
+    "username": "foodlover_updated",
+    "profilePicture": "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=150",
+    "street": "123 Food Street",
+    "city": "Yogyakarta",
+    "zipCode": "55281",
+    "country": "Indonesia"
+}
+
+### Change Password
+PUT http://localhost:5000/api/auth/profile
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+    "currentPassword": "password123",
+    "newPassword": "newpassword123"
+}
+
+### Logout
+GET http://localhost:5000/api/auth/logout
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### ==================== RESTAURANT ROUTES ====================
+
+### Get All Restaurants
+GET http://localhost:5000/api/restaurants
+
+### Get Restaurants with User Location and Filters (Jogja center coordinates)
+GET http://localhost:5000/api/restaurants?userLat=-7.7956&userLon=110.3695&radius=10&cuisine=Indonesian&priceRange=Sedang&page=1&limit=5
+
+### Get Nearby Restaurants (within 5km from Malioboro)
+GET http://localhost:5000/api/restaurants/nearby?userLat=-7.7926&userLon=110.3656&radius=5
+
+### Search Restaurants by Name/Cuisine
+GET http://localhost:5000/api/restaurants/search?query=gudeg&userLat=-7.7956&userLon=110.3695
+
+### Search for Japanese Food
+GET http://localhost:5000/api/restaurants/search?query=japanese&userLat=-7.7956&userLon=110.3695
+
+### Get Restaurant by ID with Distance
+GET http://localhost:5000/api/restaurants/1?userLat=-7.7956&userLon=110.3695
+
+### Get All Available Cuisines
+GET http://localhost:5000/api/restaurants/cuisines
+
+### Get Restaurants Sorted by Rating
+GET http://localhost:5000/api/restaurants?sortBy=rating&userLat=-7.7956&userLon=110.3695
+
+### Get Cheap Restaurants (Budget-friendly)
+GET http://localhost:5000/api/restaurants?priceRange=Murah&userLat=-7.7956&userLon=110.3695
+
+### Get Expensive Restaurants (Fine Dining)
+GET http://localhost:5000/api/restaurants?priceRange=Mahal&userLat=-7.7956&userLon=110.3695
+
+### Get Indonesian Cuisine Restaurants
+GET http://localhost:5000/api/restaurants?cuisine=Indonesian&userLat=-7.7956&userLon=110.3695
+
+### Get Mediterranean Restaurants
+GET http://localhost:5000/api/restaurants?cuisine=Mediterranean&userLat=-7.7956&userLon=110.3695
+
+### Get Restaurants with Pagination
+GET http://localhost:5000/api/restaurants?page=1&limit=3&userLat=-7.7956&userLon=110.3695
+
+
